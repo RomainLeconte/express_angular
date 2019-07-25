@@ -17,6 +17,10 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
     //this.blogPostList$ = this.blogpostService.getBlogPosts();
     this.blogpostService.getBlogPosts().subscribe(data => this.refresh(data));
+    this.blogpostService.handelPostCreated().subscribe(data => {
+      console.log("admin => ", data);
+      this.refresh(data);
+    });
   }
   deletePosts(selected) {
     const id = selected.map(s => s.value);
