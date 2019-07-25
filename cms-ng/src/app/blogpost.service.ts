@@ -16,11 +16,15 @@ export class BlogpostService {
     return this.httpClient.post<Blogpost>(this.baseUrl, newPost);
   }
 
+  uploadImage(formData: FormData) {
+    return this.httpClient.post<any>(`${this.baseUrl}/images`, formData);
+  }
+
   dispatchPostCreated(id: string) {
     this.postCreated.next(id);
   }
 
-  handelPostCreated(){
+  handelPostCreated() {
     return this.postCreated.asObservable();
   }
 

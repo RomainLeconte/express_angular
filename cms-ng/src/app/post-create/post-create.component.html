@@ -27,7 +27,10 @@
           formControlName="content"
         ></textarea>
       </mat-form-field>
-      <button mat-button type="submit">Create</button>
+      <label for="image">Choose an image</label>
+      <input type="file" name="image" id="image" formControllerName="image"/>
+      <button type="button" mat-button (click)="upload()">upload image</button>
+      <button type="submit" mat-button type="submit">Create post</button>
     </div>
   </form> </mat-card
 >>
