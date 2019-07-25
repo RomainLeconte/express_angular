@@ -1,0 +1,15 @@
+<mat-card class="example-card" *ngIf="blogpost$ | async as post; else loading">
+  <mat-card-header class="no-margin ">
+    <mat-card-title>{{ post.title }}</mat-card-title>
+    <mat-card-subtitle>{{ post.subtitle }}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image src="{{ post.image }}" alt="{{ post.title }}" />
+  <mat-card-content>
+    <p>
+      {{ post.content }}
+    </p>
+  </mat-card-content>
+</mat-card>
+<ng-template #loading>
+  <mat-spinner> </mat-spinner>
+</ng-template>
