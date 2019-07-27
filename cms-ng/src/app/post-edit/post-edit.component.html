@@ -1,0 +1,23 @@
+<mat-card *ngIf="blogpost as post; alse loading">
+    <form [formGroup]="editForm" #formDirective="ngForm" (submit)="updatePost(formDirective)">
+        <div class="example-card">
+            <mat-form-field>
+            <input matInput placeholder="title" formControlName="title" [value]="post.title">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="sub-title" formControlName="subtitle" [value]="post.subtitle">
+            </mat-form-field>
+            <mat-form-field>
+                <textarea matInput placeholder="content" formControlName="content" [value]="post.content">
+            </mat-form-field>
+            <label for="image">Choose your image</label>
+            <input type="file" name="image" id="image" [value]="post.image">
+            <button type="button" mat-button (click)="upload()">upload</button>
+            <button type="submit" mat-button >update post</button>
+        </div>
+    </form>
+</mat-card>
+
+<ng-template #loading>
+    <mat-spinner> </mat-spinner>
+</ng-template>
