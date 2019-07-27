@@ -10,6 +10,11 @@ app.set("port", process.env.port || 3000);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
+
+const uplaodsDir = require("path").join(__dirname, "/uploads");
+console.log("uplaodsDir ", uplaodsDir);
+app.use(express.static(uplaodsDir));
+
 app.use("/api/v1", api);
 app.use((req, res) => {
   const err = new Error("404 - Not Found");

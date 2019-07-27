@@ -31,7 +31,10 @@ const storage = multer.diskStorage({
       if (err) {
         return callback(err);
       }
-      callback(null, raw.toString("hex") + path.extname(file.originalname));
+      // callback(null, raw.toString("hex") + path.extname(file.originalname));
+      uploadImageName = raw.toString("hex") + path.extname(file.originalname);
+      console.log(uploadImageName);
+      callback(null, uploadImageName);
     });
   }
 });
@@ -40,15 +43,18 @@ const upload = multer({ storage: storage, limits: { fileSize: 100000 } });
 
 //file uploaded
 router.post("/blog-posts/images", upload.single("image"), (req, res) => {
-  if(!req.file.originalname.match(/\.(jpg|jpeg|png|gif)$/)){
-    return res.status(400).json({msg: 'only images file authorized'})
+  if (!req.file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+    return res.status(400).json({ msg: "only images file authorized" });
   }
-    res.status(201).send({ filename: req.file.filename, file: req.file });
+  res.status(201).send({ filename: req.file.filename, file: req.file });
 });
+
+let uploadImageName = "";
 
 router.post("/blog-posts", (req, res) => {
   console.log("req.body", req.body);
-  const blogPost = new Blogpost(req.body);
+  //const blogPost = new Blogpost(req.body);
+  const blogPost = new Blogpost({ ...req.body, image: uploadImageName });
   blogPost.save((err, blogPost) => {
     if (err) {
       return res.status(500).json(err);
