@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { Blogpost } from "../models/blogpost";
 import { BlogpostService } from "../blogpost.service";
+import { environment } from "./../../environments/environment";
 
 @Component({
   selector: "app-blogpost-list",
@@ -10,12 +11,11 @@ import { BlogpostService } from "../blogpost.service";
 })
 export class BlogpostListComponent implements OnInit {
   blogPostList$: Observable<Blogpost[]>;
+  imagePath = environment.imagePath;
 
   constructor(private blogpostService: BlogpostService) {}
 
   ngOnInit() {
     this.blogPostList$ = this.blogpostService.getBlogPosts();
   }
-
-  
 }
