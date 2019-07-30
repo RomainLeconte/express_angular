@@ -3,7 +3,7 @@
     *ngFor="let post of allPosts"
     [value]="post._id"
   >
-    {{ post.title }}
+    <a [routerLink]="['/admin/blog-posts/', post._id]">{{ post.title }}</a>
   </mat-list-option>
 </mat-selection-list>
 

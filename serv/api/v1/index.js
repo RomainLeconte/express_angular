@@ -104,4 +104,19 @@ router.delete("/blog-posts", (req, res) => {
   });
 });
 
+router.put("/blog-posts/:id", upload.single("image"), (req, res) => {
+  const id = req.params.id;
+  const conditions = { _id: id };
+  const post = { ...req.body, image: uploadImageName };
+  const update = { $set: post };
+  const options = {
+    upsert: true,
+    new: true
+  };
+	Blogpost.findOneAndUpdate(conditions, update, options, (err, response) => {
+		if(err) return res.status(500).json({ msg: 'update failed', error: err });
+		res.status(200).json({ msg: `document with id ${id} updated`, response: response });
+	});
+});
+
 module.exports = router;

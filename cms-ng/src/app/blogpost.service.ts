@@ -36,6 +36,11 @@ export class BlogpostService {
     return this.httpClient.get<Blogpost>(`${this.baseUrl}/${id}`);
   }
 
+  updatePost(id:string, blogpost:Blogpost){
+    console.log('updatePost from services : id => ', id, 'blogpost => ', blogpost);
+    return this.httpClient.put(`${this.baseUrl}/${id}`, blogpost);
+  }
+
   deleteBlogPostId(id: string): Observable<Blogpost> {
     return this.httpClient.delete<Blogpost>(`${this.baseUrl}/${id}`);
   }

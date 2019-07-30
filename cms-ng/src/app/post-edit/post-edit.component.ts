@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup, FormGroupDirective } from "@angular/forms";
 import { BlogpostService } from "../blogpost.service";
 import { ActivatedRoute } from "@angular/router";
 import { Blogpost } from "../models/blogpost";
@@ -42,9 +42,7 @@ export class PostEditComponent implements OnInit {
   }
 
   upload() {
-    let inputElement: HTMLInputElement = this.element.nativeElement.queryselector(
-      "#image"
-    );
+    let inputElement: HTMLInputElement = this.element.nativeElement.querySelector('#image');
     let fileCount: number = inputElement.files.length;
     let formData = new FormData();
     if (fileCount > 0) {
@@ -58,5 +56,26 @@ export class PostEditComponent implements OnInit {
         }
       );
     }
+  }
+  updatePost(formDirective: FormGroupDirective) {
+    if (this.editForm.valid) {
+      console.log("updatePost from post edit => ", this.editForm.value);
+      this.blogposteService
+        .updatePost(this.postId, this.editForm.value)
+        .subscribe(
+          data => this.handleSuccess(data, formDirective),
+          error => this.handleError(error)
+        );
+    }
+  }
+  handleSuccess(data, formDirective) {
+    console.log("ok => ", data, ' and => ', formDirective);
+    this.editForm.reset();
+    formDirective.resetForm();
+    this.blogposteService.dispatchPostCreated(data._id);
+  }
+
+  handleError(error) {
+    console.log("not ok => ", error.message);
   }
 }
