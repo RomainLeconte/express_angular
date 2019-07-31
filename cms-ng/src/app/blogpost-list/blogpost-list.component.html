@@ -5,8 +5,8 @@
   </mat-card-header>
   <img [src]="imagePath+post.smallImage" alt="{{ post.title }}" />
   <mat-card-content>
-    <p>
-      {{ post.content }}
+    <p [innerHTML]="post.content">
+
     </p>
   </mat-card-content>
 </mat-card>

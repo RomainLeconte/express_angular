@@ -7,9 +7,7 @@
             <mat-form-field>
                 <input matInput placeholder="sub-title" [(ngModel)]="post.subtitle" name="sub-title" required>
             </mat-form-field>
-            <mat-form-field>
-                <textarea matInput placeholder="content" [(ngModel)]="post.content" name="content" required></textarea>
-            </mat-form-field>
+            <app-ngx-editor [placeholder]="'Enter text here...'" [spellcheck]="true" [(ngModel)]="post.content" name="content"></app-ngx-editor>
             <label for="image">Choose your image</label>
             <input type="file" name="image" id="image">
             <button mat-button type="button" (click)="upload()">upload</button>
