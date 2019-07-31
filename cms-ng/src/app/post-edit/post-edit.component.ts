@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef } from "@angular/core";
-import { FormBuilder, FormGroup, FormGroupDirective } from "@angular/forms";
+import { FormGroupDirective } from "@angular/forms";
 import { BlogpostService } from "../blogpost.service";
 import { ActivatedRoute } from "@angular/router";
 import { Blogpost } from "../models/blogpost";
@@ -10,12 +10,10 @@ import { Blogpost } from "../models/blogpost";
   styleUrls: ["./post-edit.component.css"]
 })
 export class PostEditComponent implements OnInit {
-  editForm: FormGroup;
   postId: string;
   post: Blogpost;
 
   constructor(
-    private formBuilder: FormBuilder,
     private blogposteService: BlogpostService,
     private element: ElementRef,
     private activateRoute: ActivatedRoute
@@ -29,20 +27,10 @@ export class PostEditComponent implements OnInit {
       },
       error => console.log(error.message)
     );
-    this.createForm();
-  }
-
-  createForm() {
-    this.editForm = this.formBuilder.group({
-      title: "",
-      subtitle: "",
-      content: "",
-      image: ""
-    });
   }
 
   upload() {
-    let inputElement: HTMLInputElement = this.element.nativeElement.querySelector('#image');
+    let inputElement: HTMLInputElement = this.element.nativeElement.querySelector("#image");
     let fileCount: number = inputElement.files.length;
     let formData = new FormData();
     if (fileCount > 0) {
@@ -58,19 +46,26 @@ export class PostEditComponent implements OnInit {
     }
   }
   updatePost(formDirective: FormGroupDirective) {
-    if (this.editForm.valid) {
-      console.log("updatePost from post edit => ", this.editForm.value);
-      this.blogposteService
-        .updatePost(this.postId, this.editForm.value)
-        .subscribe(
-          data => this.handleSuccess(data, formDirective),
-          error => this.handleError(error)
-        );
-    }
+    // if (this.editForm.valid) {
+    //   console.log("updatePost from post edit => ", this.editForm.value);
+    //   this.blogposteService
+    //     .updatePost(this.postId, this.editForm.value)
+    //     .subscribe(
+    //       data => this.handleSuccess(data, formDirective),
+    //       error => this.handleError(error)
+    //     );
+    // }
+    const editedPost = this.post;
+    this.blogposteService
+      .updatePost(this.postId, editedPost)
+      .subscribe(
+        data => this.handleSuccess(data, formDirective),
+        error => this.handleError(error)
+      );
   }
   handleSuccess(data, formDirective) {
-    console.log("ok => ", data, ' and => ', formDirective);
-    this.editForm.reset();
+    console.log("ok => ", data, " and => ", formDirective);
+    formDirective.reset();
     formDirective.resetForm();
     this.blogposteService.dispatchPostCreated(data._id);
   }
