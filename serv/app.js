@@ -50,9 +50,11 @@ passport.use(
       User.findOne({ username: name }, (err, user) => {
         if (err) {
           console.log("user not found ", name, err.message);
+          callback(null, false, { message: 'user not found' });
         }
-        if (user.passport != req.password) {
+        if (user.password !== password) {
           console.log("wrong password for => ", user);
+          callback(null, false, { message: 'wrong password.'});
         } else {
           console.log(name, " found user");
           callback(null, user);
