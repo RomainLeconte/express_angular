@@ -4,7 +4,7 @@ const User = require("../models/user");
 const passport = require("passport");
 
 router.post("/register", (req, res) => {
-  console.log("user req.body => ", req.body);
+  //console.log("user req.body => ", req.body);
   const newUser = new User(req.body);
   newUser.save((err, user) => {
     if (err) {
@@ -29,7 +29,7 @@ router.get("/success", (req, res)=> {
 })
 
 router.get("/failure", (req, res)=> {
-    res.status(200).json({msg:'login failed'});
+    res.status(401).json({msg:'login failed', user: req.user});
 });
 
 module.exports = router;

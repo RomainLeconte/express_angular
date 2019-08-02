@@ -25,7 +25,8 @@ app.use(
   session({
     secret: "yesIKnowMySecretIsTheBestSecretForSureTrustMeBoy",
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    name: "auth"
   })
 );
 
@@ -48,15 +49,16 @@ passport.use(
     },
     (name, password, callback) => {
       User.findOne({ username: name }, (err, user) => {
+        console.log('user ???? ', user);
         if (err) {
           console.log("user not found ", name, err.message);
-          callback(null, false, { message: 'user not found' });
+          callback(null, false, { message: "user not found" });
         }
         if (user.password !== password) {
           console.log("wrong password for => ", user);
-          callback(null, false, { message: 'wrong password.'});
+          callback(null, false, { message: `wrong password. ${user.password} != ${password}` });
         } else {
-          console.log(name, " found user");
+          console.log(name, " found user => ", user);
           callback(null, user);
         }
       });
