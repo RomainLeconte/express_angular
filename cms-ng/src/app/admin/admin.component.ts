@@ -13,6 +13,7 @@ import { Router } from "@angular/router";
 export class AdminComponent implements OnInit {
   //blogPostList$: Observable<Blogpost[]>;
   allPosts: Blogpost[];
+  errorFromServer = "";
 
   constructor(
     private blogpostService: BlogpostService,
@@ -49,6 +50,7 @@ export class AdminComponent implements OnInit {
     });
   }
   handleError(err) {
+    this.errorFromServer = `Error ${err.status} - ${err.statusText}`;
     console.log(err);
   }
 

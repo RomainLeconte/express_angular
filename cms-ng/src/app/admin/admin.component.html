@@ -1,11 +1,10 @@
 <mat-card>
   <button mat-button (click)="logout()">logout</button>
+  {{errorFromServer}}
 </mat-card>
+
 <mat-selection-list #blogpost>
-  <mat-list-option
-    *ngFor="let post of allPosts"
-    [value]="post._id"
-  >
+  <mat-list-option *ngFor="let post of allPosts" [value]="post._id">
     <a [routerLink]="['/admin/blog-posts/', post._id]">{{ post.title }}</a>
   </mat-list-option>
 </mat-selection-list>
